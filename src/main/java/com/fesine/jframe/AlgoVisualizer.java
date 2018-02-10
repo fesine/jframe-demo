@@ -3,6 +3,8 @@ package com.fesine.jframe;
 import com.fesine.jframe.util.AlgoVisHelper;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 /**
@@ -17,6 +19,7 @@ public class AlgoVisualizer {
 
     private Circle[] circles;
     private AlgoFrame frame;
+    private boolean isAnimated = true;
 
 
     public AlgoVisualizer(int sceneWidth, int sceneHeight, int n) {
@@ -33,6 +36,7 @@ public class AlgoVisualizer {
 
         EventQueue.invokeLater(() -> {
             frame = new AlgoFrame("welcome", sceneWidth, sceneHeight);
+            frame.addKeyListener(new AlgoKeyListener());
             new Thread(() -> {
                 run();
                 return;
@@ -49,9 +53,28 @@ public class AlgoVisualizer {
             frame.render(circles);
             AlgoVisHelper.pause(20);
             //更新数据
-            for (Circle circle : circles) {
-                circle.move(0, 0, frame.getCanvasWidth(), frame.getCanvasHeight());
+            if (isAnimated) {
+                for (Circle circle : circles) {
+                    circle.move(0, 0, frame.getCanvasWidth(), frame.getCanvasHeight());
+                }
             }
         }
+    }
+
+    private class AlgoKeyListener extends KeyAdapter{
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if(e.getKeyChar() == ' '){
+                isAnimated =!isAnimated;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int sceneWidth = 800;
+        int sceneHeight = 800;
+        int n = 10;
+        AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, n);
     }
 }
