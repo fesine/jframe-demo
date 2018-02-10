@@ -28,7 +28,6 @@ public class AlgoFrame extends JFrame {
         this.canvasWidth=canvasWidth;
         this.canvasHeight=canvasHeight;
         AlgoCanvas canvas = new AlgoCanvas();
-        //canvas.setPreferredSize(new Dimension(canvasWidth,canvasHeight));
         setContentPane(canvas);
         pack();
         setSize(canvasWidth, canvasHeight);
@@ -46,20 +45,39 @@ public class AlgoFrame extends JFrame {
         return canvasHeight;
     }
 
+    private Circle[] circles;
+
+    public void render(Circle[] circles){
+        this.circles=circles;
+        repaint();
+    }
+
     private class AlgoCanvas extends JPanel{
 
         private static final long serialVersionUID = -9105108446016026356L;
+
+        /**
+         * 使用双缓存
+         */
+        public AlgoCanvas() {
+            super(true);
+        }
 
         @Override
         public void paintComponent(Graphics g){
             super.paintComponent(g);
             //强转
             Graphics2D g2d = (Graphics2D) g;
-            AlgoVisHelper.setStrokeWidth(g2d,5);
-            AlgoVisHelper.setColor(g2d,Color.BLUE);
-            AlgoVisHelper.fillCircle(g2d,canvasWidth/2,canvasHeight/2,200);
+            //打开抗锯齿
+            RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.addRenderingHints(hints);
+            AlgoVisHelper.setStrokeWidth(g2d,1);
             AlgoVisHelper.setColor(g2d,Color.RED);
-            AlgoVisHelper.strokeCircle(g2d,canvasWidth/2,canvasHeight/2,200);
+            //动画处理
+            for (Circle circle : circles) {
+                AlgoVisHelper.strokeCircle(g2d, circle.x, circle.y, circle.getR());
+            }
         }
 
         @Override

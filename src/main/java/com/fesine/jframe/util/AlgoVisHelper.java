@@ -46,4 +46,12 @@ public class AlgoVisHelper {
     public static void setColor(Graphics2D g2d, Color color) {
         g2d.setColor(color);
     }
+
+    public static void pause(int t){
+        try {
+            Thread.sleep(t);
+        } catch (InterruptedException e) {
+            System.out.println("Error in sleeping");
+        }
+    }
 }
