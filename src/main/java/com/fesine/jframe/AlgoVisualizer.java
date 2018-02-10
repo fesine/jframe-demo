@@ -5,6 +5,8 @@ import com.fesine.jframe.util.AlgoVisHelper;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
 /**
@@ -22,9 +24,8 @@ public class AlgoVisualizer {
     private boolean isAnimated = true;
 
 
-    public AlgoVisualizer(int sceneWidth, int sceneHeight, int n) {
+    public AlgoVisualizer(int sceneWidth, int sceneHeight, int n,int r) {
 
-        int r = 50;
         circles = new Circle[n];
         for (int i = 0; i < n; i++) {
             int x = (int) (Math.random() * (sceneWidth - 2 * r)) + r;
@@ -37,6 +38,7 @@ public class AlgoVisualizer {
         EventQueue.invokeLater(() -> {
             frame = new AlgoFrame("welcome", sceneWidth, sceneHeight);
             frame.addKeyListener(new AlgoKeyListener());
+            frame.addMouseListener(new AlgoMouseListener());
             new Thread(() -> {
                 run();
                 return;
@@ -70,11 +72,26 @@ public class AlgoVisualizer {
         }
     }
 
+    private class AlgoMouseListener extends MouseAdapter{
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            e.translatePoint(0, -(frame.getBounds().height - frame.getCanvasHeight()));
+            System.out.println(e.getPoint());
+            for (Circle circle : circles) {
+                if(circle.contain(e.getPoint())){
+                    circle.isFilled = !circle.isFilled;
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
-        int sceneWidth = 800;
-        int sceneHeight = 800;
+        int sceneWidth = 600;
+        int sceneHeight = 600;
         int n = 10;
-        AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, n);
+        int r = 50;
+        AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, n,r);
     }
 }

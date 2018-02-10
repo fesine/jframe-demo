@@ -1,5 +1,7 @@
 package com.fesine.jframe;
 
+import java.awt.*;
+
 /**
  * @description: 类描述
  * @author: Fesine
@@ -14,6 +16,7 @@ public class Circle {
     private int r;
     public int vx;
     public int vy;
+    public boolean isFilled = false;
 
     public Circle(int x, int y, int r, int vx, int vy) {
         this.x = x;
@@ -24,15 +27,14 @@ public class Circle {
     }
 
 
-
     public int getR() {
         return r;
     }
 
-    public void move(int minx, int miny, int maxx, int maxy){
-        x +=vx;
-        y +=vy;
-        checkCollision(minx,miny,maxx,maxy);
+    public void move(int minx, int miny, int maxx, int maxy) {
+        x += vx;
+        y += vy;
+        checkCollision(minx, miny, maxx, maxy);
     }
 
     private void checkCollision(int minx, int miny, int maxx, int maxy) {
@@ -52,5 +54,9 @@ public class Circle {
             y = maxy - r;
             vy = -vy;
         }
+    }
+
+    public boolean contain(Point p) {
+        return (x - p.x) * (x - p.x) + (y - p.y) * (y - p.y) <= r * r;
     }
 }

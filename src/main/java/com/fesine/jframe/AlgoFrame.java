@@ -76,7 +76,11 @@ public class AlgoFrame extends JFrame {
             AlgoVisHelper.setColor(g2d,Color.RED);
             //动画处理
             for (Circle circle : circles) {
-                AlgoVisHelper.strokeCircle(g2d, circle.x, circle.y, circle.getR());
+                if (circle.isFilled) {
+                    AlgoVisHelper.fillCircle(g2d, circle.x, circle.y, circle.getR());
+                } else {
+                    AlgoVisHelper.strokeCircle(g2d, circle.x, circle.y, circle.getR());
+                }
             }
         }
 
