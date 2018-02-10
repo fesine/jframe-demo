@@ -18,8 +18,8 @@ public class Main {
             //frame.setSize(500,500);
             //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             //frame.setVisible(true);
-            //AlgoFrame frame = new AlgoFrame("welcome", 500, 500);
-            AlgoFrame frame = new AlgoFrame("welcome");
+            AlgoFrame frame = new AlgoFrame("welcome", 500, 500);
+            //AlgoFrame frame = new AlgoFrame("welcome");
         });
     }
 }
