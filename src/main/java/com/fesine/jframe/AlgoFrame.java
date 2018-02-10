@@ -1,8 +1,9 @@
 package com.fesine.jframe;
 
+import com.fesine.jframe.util.AlgoVisHelper;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
 /**
  * @description: 类描述
@@ -54,14 +55,11 @@ public class AlgoFrame extends JFrame {
             super.paintComponent(g);
             //强转
             Graphics2D g2d = (Graphics2D) g;
-            int strokeWidth = 5;
-            g2d.setStroke(new BasicStroke(strokeWidth));
-            g2d.setColor(Color.RED);
-            Ellipse2D circle = new Ellipse2D.Double(50, 50, 300, 300);
-            g2d.draw(circle);
-            g2d.setColor(Color.BLUE);
-            Ellipse2D circle2 = new Ellipse2D.Double(50, 50, 300, 300);
-            g2d.fill(circle2);
+            AlgoVisHelper.setStrokeWidth(g2d,5);
+            AlgoVisHelper.setColor(g2d,Color.BLUE);
+            AlgoVisHelper.fillCircle(g2d,canvasWidth/2,canvasHeight/2,200);
+            AlgoVisHelper.setColor(g2d,Color.RED);
+            AlgoVisHelper.strokeCircle(g2d,canvasWidth/2,canvasHeight/2,200);
         }
 
         @Override
