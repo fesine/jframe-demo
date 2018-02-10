@@ -2,6 +2,7 @@ package com.fesine.jframe;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 /**
  * @description: 类描述
@@ -51,8 +52,16 @@ public class AlgoFrame extends JFrame {
         @Override
         public void paintComponent(Graphics g){
             super.paintComponent(g);
-            //绘制一个圆
-            g.drawOval(50,50,300,300);
+            //强转
+            Graphics2D g2d = (Graphics2D) g;
+            int strokeWidth = 5;
+            g2d.setStroke(new BasicStroke(strokeWidth));
+            g2d.setColor(Color.RED);
+            Ellipse2D circle = new Ellipse2D.Double(50, 50, 300, 300);
+            g2d.draw(circle);
+            g2d.setColor(Color.BLUE);
+            Ellipse2D circle2 = new Ellipse2D.Double(50, 50, 300, 300);
+            g2d.fill(circle2);
         }
 
         @Override
